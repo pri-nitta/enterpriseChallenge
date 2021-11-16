@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.fiap.pratos.jdbc.ConnectionManager;
 import br.com.fiap.pratos.jdbc.PratosDbManager;
 import br.fiap.prato.entity.Prato;
 
@@ -18,7 +19,8 @@ public class PratoDAOImpl implements PratoDAO {
 	@Override
 	public void gravar(Prato prato) {
 		try {
-			Connection conexao = PratosDbManager.obterConexao();
+//			Connection conexao = PratosDbManager.obterConexao();
+			conexao = ConnectionManager.getInstance().getConnection();
 			System.out.println("Conectado!");
 
 			PreparedStatement pstmt = conexao.prepareStatement("INSERT INTO T_PRATO "
@@ -86,9 +88,10 @@ public class PratoDAOImpl implements PratoDAO {
 			pstmt = conexao.prepareStatement("UPDATE T_PRATO SET NM_PRATO =?, DESC_PRATO = ?, VL_PRATO = ?, CD_REST =?, CD_TIPO_COMIDA =?,   WHERE CD_PRATO = ?");
 			pstmt.setString(1, prato.getNome());
 			pstmt.setString(2, prato.getDescricao());
-			pstmt.setFloat(3, 8);
-			pstmt.setInt(4, 8);
-			pstmt.setInt(5, 8);
+			pstmt.setFloat(3, prato.getValor());
+			pstmt.setInt(4, prato.getCod_rest());
+			pstmt.setInt(5, prato.getCod_tipo_comida());
+			pstmt.setInt(6, prato.getCd_estilo_cozinha());
 			pstmt.executeUpdate();
 		}catch (SQLException e) {
 			e.printStackTrace();
