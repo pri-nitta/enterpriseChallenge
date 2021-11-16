@@ -1,4 +1,4 @@
-package entity;
+package br.fiap.prato.entity;
 
 public class Prato {
 	
